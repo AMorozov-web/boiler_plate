@@ -2,6 +2,7 @@ const path = require('path');
 const CopyPlugin = require("copy-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const {extendDefaultPlugins} = require("svgo");
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: './src/index.js',
@@ -11,6 +12,12 @@ module.exports = {
     clean: {
       keep: 'index.html',
     },
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({ parallel: true })
+    ]
   },
   devServer: {
     inline: false,
@@ -101,5 +108,5 @@ module.exports = {
     modules: [path.resolve(__dirname, 'src'), path.resolve('node_modules')],
     extensions: ['.js', '.jsx']
   },
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
 };
