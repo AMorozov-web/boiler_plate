@@ -1,7 +1,5 @@
 import React from 'react';
 
-import 'normalize.css';
-
 const App = () => {
 
   return (
