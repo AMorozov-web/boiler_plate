@@ -1,16 +1,16 @@
 const path = require('path');
 const CopyPlugin = require("copy-webpack-plugin");
-const imageminGifsicle = require("imagemin-gifsicle");
-const imageminOptipng = require("imagemin-optipng");
-const imageminSvgo = require("imagemin-svgo");
-const imageminMozjpeg = require('imagemin-mozjpeg');
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const {extendDefaultPlugins} = require("svgo");
 
 module.exports = {
   entry: './src/index.js',
   output: {
     filename: 'js/bundle.js',
     path: path.resolve(__dirname, 'public'),
-    clean: true,
+    clean: {
+      keep: 'index.html',
+    },
   },
   devServer: {
     inline: false,
@@ -43,7 +43,8 @@ module.exports = {
           ],
       },
       {
-        test: /\.(png|jpe?g|gif|webp|svg)$/i,
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: "asset",
           use: [
             {
               loader: 'file-loader',
@@ -57,6 +58,32 @@ module.exports = {
     ],
   },
   plugins: [
+    new ImageMinimizerPlugin({
+      minimizerOptions: {
+        plugins: [
+          ["gifsicle", { interlaced: true }],
+          ["mozjpeg", { quality: 63 }],
+          ["optipng", { optimizationLevel: 5 }],
+          [
+            "svgo",
+            {
+              plugins: extendDefaultPlugins([
+                {
+                  name: "removeViewBox",
+                  active: false,
+                },
+                {
+                  name: "addAttributesToSVGElement",
+                  params: {
+                    attributes: [{ xmlns: "http://www.w3.org/2000/svg" }],
+                  },
+                },
+              ]),
+            },
+          ],
+        ],
+      },
+    }),
     new CopyPlugin({
       patterns: [
         {
