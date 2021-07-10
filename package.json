@@ -1,5 +1,5 @@
 {
-  "name": "new-project",
+  "name": "boiler_plate",
   "version": "1.0.0",
   "description": "My new project",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "stylelint": "stylelint \"src/sass/**/*.scss\" --syntax scss",
     "test": "npm run eslint && npm run stylelint",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server"
+    "start": "webpack serve --mode development"
   },
   "devDependencies": {
     "@babel/core": "7.12.10",
@@ -22,12 +22,16 @@
     "eslint-config-htmlacademy": "2.1.0",
     "eslint-plugin-react": "7.22.0",
     "file-loader": "6.2.0",
+    "imagemin-gifsicle": "7.0.0",
+    "imagemin-mozjpeg": "9.0.0",
+    "imagemin-optipng": "8.0.0",
+    "imagemin-svgo": "9.0.0",
     "style-loader": "2.0.0",
     "stylelint": "13.6.1",
     "stylelint-config-htmlacademy": "0.1.4",
     "url-loader": "4.1.1",
-    "webpack": "4.46.0",
-    "webpack-cli": "3.3.12",
+    "webpack": "5.44.0",
+    "webpack-cli": "4.7.2",
     "webpack-dev-server": "3.11.2"
   },
   "engines": {
