@@ -36,72 +36,72 @@ module.exports = {
           loader: 'babel-loader',
         },
       },
-      // {
-      //   test: /\.(woff|woff2)$/,
-      //     use: [
-      //       {
-      //         loader: 'file-loader',
-      //         options: {
-      //           name: '[path][name].[ext]',
-      //           emitFile: false,
-      //         },
-      //       },
-      //     ],
-      // },
-      // {
-      //   test: /\.(png|jpe?g|gif|svg)$/i,
-      //   type: "asset",
-      //     use: [
-      //       {
-      //         loader: 'file-loader',
-      //         options: {
-      //           name: '[path][name].[ext]',
-      //           emitFile: false,
-      //         },
-      //       },
-      //     ],
-      // },
+      {
+        test: /\.(woff|woff2)$/,
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[path][name].[ext]',
+                emitFile: false,
+              },
+            },
+          ],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: "asset",
+          use: [
+            {
+              loader: 'file-loader',
+              options: {
+                name: '[path][name].[ext]',
+                emitFile: false,
+              },
+            },
+          ],
+      },
     ],
   },
   plugins: [
-    // new ImageMinimizerPlugin({
-    //   minimizerOptions: {
-    //     plugins: [
-    //       ["gifsicle", { interlaced: true }],
-    //       ["mozjpeg", { quality: 63 }],
-    //       ["optipng", { optimizationLevel: 5 }],
-    //       [
-    //         "svgo",
-    //         {
-    //           plugins: extendDefaultPlugins([
-    //             {
-    //               name: "removeViewBox",
-    //               active: false,
-    //             },
-    //             {
-    //               name: "addAttributesToSVGElement",
-    //               params: {
-    //                 attributes: [{ xmlns: "http://www.w3.org/2000/svg" }],
-    //               },
-    //             },
-    //           ]),
-    //         },
-    //       ],
-    //     ],
-    //   },
-    // }),
-    // new CopyPlugin({
-    //   patterns: [
-    //     {
-    //       from: 'src/assets/img',
-    //       to: 'img',
-    //     },
-    //     {
-    //       from: 'src/assets/fonts',
-    //       to: 'fonts',
-    //     },
-    //   ],
-    // }),
+    new ImageMinimizerPlugin({
+      minimizerOptions: {
+        plugins: [
+          ["gifsicle", { interlaced: true }],
+          ["mozjpeg", { quality: 63 }],
+          ["optipng", { optimizationLevel: 5 }],
+          [
+            "svgo",
+            {
+              plugins: extendDefaultPlugins([
+                {
+                  name: "removeViewBox",
+                  active: false,
+                },
+                {
+                  name: "addAttributesToSVGElement",
+                  params: {
+                    attributes: [{ xmlns: "http://www.w3.org/2000/svg" }],
+                  },
+                },
+              ]),
+            },
+          ],
+        ],
+      },
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: 'src/assets/img',
+          to: 'img',
+        },
+        {
+          from: 'src/assets/fonts',
+          to: 'fonts',
+        },
+      ],
+    }),
   ],
   resolve: {
     modules: [path.resolve(__dirname, 'src'), path.resolve('node_modules')],
