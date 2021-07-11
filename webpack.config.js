@@ -5,8 +5,6 @@ const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const {extendDefaultPlugins} = require("svgo");
 const TerserPlugin = require('terser-webpack-plugin');
 
-const isDev = process.env.NODE_ENV === 'development';
-
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -122,5 +120,5 @@ module.exports = {
     modules: [path.resolve(__dirname, 'src'), path.resolve('node_modules')],
     extensions: ['.js', '.jsx']
   },
-  devtool: isDev ? 'source-map' : '',
+  devtool: 'source-map',
 };
