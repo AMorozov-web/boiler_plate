@@ -1,4 +1,5 @@
 const path = require('path');
+const HtmlMinimizerPlugin = require("html-minimizer-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const {extendDefaultPlugins} = require("svgo");
@@ -9,14 +10,13 @@ module.exports = {
   output: {
     filename: 'js/bundle.js',
     path: path.resolve(__dirname, 'public'),
-    clean: {
-      keep: 'index.html',
-    },
+    clean: true,
   },
   optimization: {
     minimize: true,
     minimizer: [
-      new TerserPlugin({ parallel: true })
+      new TerserPlugin({ parallel: true }),
+      new HtmlMinimizerPlugin(),
     ]
   },
   devServer: {
@@ -29,6 +29,15 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.(html)$/,
+        type: 'asset',
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -50,7 +59,7 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        type: "asset",
+        type: 'asset',
           use: [
             {
               loader: 'file-loader',
@@ -92,6 +101,10 @@ module.exports = {
     }),
     new CopyPlugin({
       patterns: [
+        {
+          from: path.resolve(__dirname, 'src', 'index.html'),
+          to: path.resolve(__dirname, 'public'),
+        },
         {
           from: 'src/assets/img',
           to: 'img',
