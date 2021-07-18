@@ -108,10 +108,12 @@ module.exports = {
         {
           from: 'src/assets/img',
           to: 'img',
+          noErrorOnMissing: true,
         },
         {
           from: 'src/assets/fonts',
           to: 'fonts',
+          noErrorOnMissing: true,
         },
       ],
     }),
