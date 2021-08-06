@@ -5,6 +5,25 @@ const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 const {extendDefaultPlugins} = require("svgo");
 const TerserPlugin = require('terser-webpack-plugin');
 
+const isDev = process.env.NODE_ENV === 'development';
+const isProd = !isDev;
+
+const optimization = () => {
+
+  const config = {
+    minimize: isProd,
+  }
+
+  if (isProd) {
+    config.minimizer = [
+      new TerserPlugin(),
+      new HtmlMinimizerPlugin(),
+    ]
+  }
+
+  return config;
+}
+
 module.exports = {
   entry: './src/index.js',
   output: {
@@ -12,13 +31,7 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     clean: true,
   },
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({ parallel: true }),
-      new HtmlMinimizerPlugin(),
-    ]
-  },
+  optimization: optimization(),
   devServer: {
     contentBase: path.resolve(__dirname, 'public'),
     watchContentBase: true,
